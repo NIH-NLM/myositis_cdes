@@ -1,2 +1,38 @@
 # myositis_cdes
-LinkML representations of myositis common data elements (CDEs) for the International Myositis Assessment and Clinical Studies Group (IMACS)
+
+This "LinkML project" includes a standard repository structure and `Makefile` necessary to allow faster schema build and test iterations, helping novice and experienced users focus on LinkML productivity.
+
+"LinkML representations of myositis common data elements (CDEs) for the International Myositis Assessment and Clinical Studies Group (IMACS)"
+
+## Website
+
+[https://NIH-NLM.github.io/myositis_cdes](https://NIH-NLM.github.io/myositis_cdes)
+
+## Repository Structure
+
+* [examples/](examples/) - example data (do not edit these)
+* [project/](project/) - project files (do not edit these)
+* [src/](src/) - source files (edit these)
+  * [data](src/data)
+    * [examples](src/data/examples) --- example data conforming to LinkML schema
+  * [myositis_cdes](src/myositis_cdes)
+    * [schema](src/myositis_cdes/schema) -- LinkML schema
+      (edit this)
+    * [datamodel](src/myositis_cdes/datamodel) -- generated
+      Python datamodel
+* [tests/](tests/) - Python tests
+
+## Developer Documentation
+
+<details>
+To run commands you may use good old make or the command runner [just](https://github.com/casey/just/) which is a better choice on Windows.
+Use the `make` command or `duty` commands to generate project artefacts:
+* `make help` or `just --list`: list all pre-defined tasks
+* `make all` or `just all`: make everything
+* `make deploy` or `just deploy`: deploys site
+</details>
+
+## Credits
+
+This project was made with
+[linkml-project-cookiecutter](https://github.com/linkml/linkml-project-cookiecutter).
