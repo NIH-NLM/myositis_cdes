@@ -1,0 +1,203 @@
+id: https://w3id.org/imacs/physician_global_disease_activity_assessment 
+name: physician_global_disease_activity_assessment 
+description: |-
+    Common data elements for the Physician Global Disease Activity Assessment. 
+license: https://creativecommons.org/publicdomain/zero/1.0/
+  
+prefixes: 
+    - UMLS: 'https://uts.nlm.nih.gov/uts/umls/concept/' 
+    - OMOP: 'https://athena.ohdsi.org/search-terms/terms/' 
+    - PMID: 'https://pubmed.ncbi.nlm.nih.gov/'
+  
+imports: 
+  - linkml:types 
+  - ./cde_metamodel.yaml
+  - ./myositis_core_cdes.yaml 
+  
+slots: 
+    
+    pga_phys_assessor: 
+        description: The identifier for the physician reporting the values for the assessment (e.g., name). 
+        question_text: "Assessor"
+        cde_label: Physician Assessor
+        imacs_variable_name: MD_GLOBAL_ACT_ASSESSOR 
+        range: string 
+        required: true 
+        question_order: 1
+        in_subset: 
+            - common_data_element
+        close_mappings: 
+            - OMOP:36717957 
+ 
+    vas_units:
+        description: Specifies the units in centimeters or millimeters for a visual analog scale.
+        question_text: "Visual Analog Scale Units"
+        cde_label: Visual Analog Scale Units
+        range: vas_units_enum
+        in_subset:
+            - common_data_element
+
+    pga_global_act_vas: 
+        description: >-
+            A continuous scale for the Physician Global Disease Activity Assessment that measures a participant’s overall evaluation of their disease activity, where "0" indicates no evidence of disease activity and "100" indicates extremely active or severe disease activity. 
+        question_text: >-
+            Please rate your global (overall) disease activity assessment by drawing a vertical mark on the 10-cm (100-mm) line below according to the following scale: left end of line = no evidence of disease activity, midpoint of line = moderate disease activity, and right end of line = extremely active or severe disease activity.
+        cde_label: Physician Global Activity Visual Analog Scale
+        required: true 
+        imacs_variable_name: MD_GLOBAL_ACT_VAS  
+        range: integer 
+        equals_expression: "<= {pga_global_act_vas_length}"
+        in_subset: 
+            - common_data_element 
+        question_order: 2
+        close_mappings: 
+            - UMLS:C2960751 
+            - OMOP:4158877 
+     
+    pga_global_act_vas_length: 
+        description: Length of the visual analog scale for the Physician Global Disease Activity Assessment.
+        question_text: "VAS Line Length for Physician Global Activity."
+        cde_label: Physician Global Activity Visual Analog Scale Length
+        imacs_variable_name: MD_GLOBAL_ACT_LNGTH 
+        range: integer
+        in_subset: 
+            - common_data_element 
+        close_mappings: 
+            - UMLS:C2960751 
+ 
+    pga_global_act_adj_vas: 
+        description: Visual analog scale for the Physician Global Disease Activity Assessment, adjusted for the length of the scale. This is calculated by multiplying the physician global disease activity VAS by 10 and dividing the product by the length of the VAS. This score has a minimum value of 0 and a maximum value of 10.
+        question_text: "Physician Global Activity Adjusted VAS Score."
+        cde_label: Physician Global Activity Adjusted Visual Analog Scale
+        imacs_variable_name: MD_GLOBAL_ACT_ADJ_VAS 
+        range: float 
+        minimum_value: 0 
+        maximum_value: 10 
+        equals_expression: "({pga_global_act_vas} * 10) / {pga_global_act_vas_length}" 
+        in_subset: 
+            - common_data_element 
+  
+    pga_global_act_ordinal: 
+        description: Global disease activity 5-point ordinal score for the Physician Global Disease Activity Assessment. 
+        question_text: "Also rate global disease activity on a 5-point ordinal scale:"
+        cde_label: Physician Global Activity 5-point Ordinal Scale
+        imacs_variable_name: MD_GLOBAL_ACT_LIKERT  
+        range: pga_global_act_ordinal_enum 
+        in_subset: 
+            - common_data_element 
+        question_order: 3
+        close_mappings: 
+            - UMLS:C1709336 
+  
+    pga_21_point_circle_vas:
+        description: >-
+            The Physician Global Disease Activity Assessment using a 21-point numeric rating scale that ranges from 0-10 and is in 0.5 increments, which measures a participant’s overall evaluation of their disease activity. "0" indicates no evidence of disease activity and "10" indicates maximal disease activity. 
+        question_text: >-
+            Considering the whole signs and symptoms of the disease AT THE TIME OF THE PRESENT VISIT, please rate the overall level of disease activity by filling a circle below.
+        cde_label: Physician Global Activity 21-point Numeric Rating Scale
+        range: pga_21_point_numeric_rating_scale_enum 
+        in_subset: 
+            - common_data_element 
+        question_order: 4
+        close_mappings: 
+            - UMLS:C5555906 
+            - OMOP:37156296 
+ 
+classes: 
+     
+    pga_global_activity_assessment: 
+        description: >-
+            An instrument that is used to assess the severity of a participant’s potentially reversible pathology or physiology resulting for their myositis and is assessed by a physician.  
+        form_text: >-
+            "Disease Activity is defined as potentially reversible pathology or physiology resulting from the myositis. Clinical findings known or suspected to be due to another disease process should not be considered in this evaluation. The global assessment of disease activity is to be judged from all the information available to you today including the participant’s appearance, history, physical examination, diagnostic laboratory testing and your resultant medical therapy." 
+        instantiates:
+            - imacs_assessment 
+        mixins: 
+            - contextual_information 
+        slots: 
+            - pga_phys_assessor 
+            - pga_assessor_relation_to_pt 
+            - pga_assessor_relation_to_pt_o 
+            - pga_global_act_vas 
+            - pga_21_point_circle_vas 
+            - pga_global_act_vas_length 
+            - pga_global_act_adj_vas 
+            - pga_global_act_ordinal 
+        exact_mappings: 
+            - UMLS:C4050369 
+            - OMOP:36684886
+        references:
+            - PMID:9365086
+            - PMID:18163404
+            - PMID:16583392
+            - PMID:22588740
+            - PMID:20551105
+  
+enums: 
+  
+    pga_21_point_numeric_rating_scale_enum: 
+        permissible_values: 
+            0: 
+                description: The minimal physician rating for disease activity. 
+            0.5: 
+                description: A physician rating of 0.5 for disease activity. 
+            1.0: 
+                description: A physician rating of 1.0 for disease activity. 
+            1.5: 
+                description: A physician rating of 1.5 for disease activity. 
+            2.0: 
+                description: A physician rating of 2.0 for disease activity. 
+            2.5: 
+                description: A physician rating of 2.5 for disease activity. 
+            3.0: 
+                description: A physician rating of 3.0 for disease activity. 
+            3.5: 
+                description: A physician rating of 3.5 for disease activity. 
+            4.0: 
+                description: A physician rating of 4.0 for disease activity. 
+            4.5: 
+                description: A physician rating of 4.5 for disease activity. 
+            5.0: 
+                description: A physician rating of 5.0 for disease activity. 
+            5.5: 
+                description: A physician rating of 5.5 for disease activity. 
+            6.0: 
+                description: A physician rating of 6.0 for disease activity. 
+            6.5: 
+                description: A physician rating of 6.5 for disease activity. 
+            7.0: 
+                description: A physician rating of 7.0 for disease activity. 
+            7.5: 
+                description: A physician rating of 7.5 for disease activity. 
+            8.0: 
+                description: A physician rating of 8.0 for disease activity. 
+            8.5: 
+                description: A physician rating of 8.5 for disease activity. 
+            9.0: 
+                description: A physician rating of 9.0 for disease activity. 
+            9.5: 
+                description: A physician rating of 9.5 for disease activity. 
+            10.0: 
+                description: The maximal physician rating for disease activity. 
+  
+    pga_global_act_ordinal_enum: 
+        permissible_values: 
+            0: 
+                description: None (i.e., no disease activity) 
+            1: 
+                description: Mild activity 
+            2: 
+                description: Moderate activity 
+            3: 
+                description: Severe activity 
+            4: 
+                description: Extremely severe activity
+
+    vas_units_enum:
+        permissible_values:
+            millimeters (mm):
+                description: A metric unit of length equivalent to one thousandth of a meter.
+                meaning: UMLS:C0439200
+            centimeters (cm):
+                description: A metric unit of length equivalent to one hundredth of a meter.
+                meaning: UMLS:C0475210

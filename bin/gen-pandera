@@ -1,0 +1,6 @@
+#!/Users/dillerma/devel/myositis_cdes/myositis_cdes/bin/python3.15
+import sys
+from linkml.generators.panderagen import cli
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(cli())

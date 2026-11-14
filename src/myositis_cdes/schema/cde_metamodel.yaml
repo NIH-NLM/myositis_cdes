@@ -1,0 +1,105 @@
+id: https://w3id.org/imacs/cde_metamodel
+name: linkml_cde_metamodel
+description: A metamodel for defining LinkML representations of common data elements (CDEs).
+license: https://creativecommons.org/publicdomain/zero/1.0/
+
+prefixes:
+    - UMLS: 'https://uts.nlm.nih.gov/uts/umls/concept/'
+    - OMOP: 'https://athena.ohdsi.org/search-terms/terms/'
+    - PMID: 'https://pubmed.ncbi.nlm.nih.gov/'
+    - linkml: 'https://w3id.org/linkml/'
+
+imports:
+    - linkml:types
+
+classes: 
+
+    cde_assessment:
+        class_uri: imacs:cde_assessment
+        description: >-
+            An abstract class to represent the set of slots that can be used in a CDE assessment.
+        abstract: true
+        slots:
+            - question_text
+            - cde_label
+            - form_text
+            - imacs_variable_name
+            - assessment_method
+            - assessment_method_mapping
+            - references
+            - rounding_precision
+            - instructions
+            - question_order
+            - cde_repository_short_id
+            - promis_identifier
+            - nci_cadsr_id
+            - version
+            - population
+            - population_mapping
+            
+
+slots:
+
+    question_text:
+        description: The text that is used in the assessment for each question.
+        range: string
+
+    cde_label:
+        description: A human-readable name for a CDE.
+        range: string
+    
+    form_text:
+        description: The text that is used at the beginning of an assessment.
+        range: string
+    
+    imacs_variable_name:
+        description: The name of that was assigned to the variable in the IMACS codebook.
+        range: string
+    
+    assessment_method:
+        description: The process through which the data about the participant were acquired.
+        range: string
+    
+    assessment_method_mapping:
+        description: A URI or CURIE that represents an assessment method.
+        range: uriorcurie
+    
+    references:
+        description: A PubMed ID or DOI for a publication.
+        range: string
+    
+    rounding_precision:
+        description: For numeric data, the number of digits or decimal places reported.
+        range: string
+    
+    instructions:
+        description: A description of the steps that need to be taken to perform the evaluation associated with the CDE.
+        range: string
+    
+    question_order:
+        description: The sequential position of the question in the form.
+        range: string
+    
+    cde_repository_short_id:
+        description: An alphanumeric identifier curated by the NIH CDE repository to uniquely identify a common data element.
+        range: string
+    
+    promis_identifier:
+        description: An alphanumeric identifier curated by the PROMIS research team to uniquely identify a PROMIS variable.
+        range: string
+    
+    nci_cadsr_id:
+        description: A numeric identifier curated by the NCI caDSR II repository to uniquely identify a CDE.
+        range: string
+    
+    version:
+        description: The version number for a given assessment or form.
+        range: string
+    
+    population:
+        description: A collection of participants who are grouped based on some common characteristic.
+        range: string
+    
+    population_mapping:
+        description: A URI or CURIE that represents the collection of participants.
+        range: uriorcurie 

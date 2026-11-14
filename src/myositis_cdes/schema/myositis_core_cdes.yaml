@@ -1,0 +1,92 @@
+id: https://w3id.org/imacs/myositis_cores_cdes
+name: clinical_research_study_core_cdes
+description: |-
+    Core common data elements for the IMACS study repository.
+license: https://creativecommons.org/publicdomain/zero/1.0/
+
+imports:
+  - linkml:types
+  - ./cde_metamodel.yaml
+
+prefixes:
+    linkml: https://w3id.org/linkml/
+
+default_prefix: imacs
+
+subsets:
+    
+    common_data_element:
+        description: >-
+            Set of LinkML classes that each represent a CDE.
+    
+    core_assessment_variables:
+        description: >-
+            Set of variables that are common to every assessment form.
+
+slots:
+
+    subject_id:
+        description: Subject Identifier for the Study - A unique identifier for a subject in a study
+        question_text: "SUBJECT ID"
+        cde_label: Subject ID
+        range: string
+        cde_repository_short_id: Aguk0xu_dB
+        in_subset:
+            - core_assessment_variables
+            - common_data_element
+    
+    assessment_number:
+        description: An ordered number indicating which assessment in a series of assessments the data pertain to.
+        question_text: "Assessment number"
+        cde_label: Assessment Number
+        range: integer
+        minimum_value: 0
+        maximum_value: 999
+        required: true
+        in_subset:
+            - core_assessment_variables
+            - common_data_element
+    
+    assessment_date:
+        description: Date on which the assessment was performed.
+        question_text: "Date of assessment"
+        cde_label: Assessment Date
+        range: date
+        required: true
+        in_subset:
+            - core_assessment_variables
+    
+    certified_by:
+        description: The name of the person checking that the data are complete and within range.
+        question_text: "Certified by:"
+        cde_label: Certified By
+        range: string
+        in_subset:
+            - core_assessment_variables
+            - common_data_element
+    
+    certification_date:
+        description: Date on which the assessment's values were certified.
+        question_text: "Certification Date:"
+        cde_label: Certification Date
+        range: date
+        in_subset:
+            - core_assessment_variables
+            - common_data_element
+
+classes:
+    
+    imacs_assessment:
+        class_uri: imacs:imacs_assessment
+        is_a: cde_assessment
+        description: >-
+            An abstract class to represent the set of variables common to every IMACS assessment.
+        abstract: true
+        slots:
+            - subject_id
+            - assessment_number
+            - assessment_date
+            - assessment_month
+            - certified_by
+            - certification_date
+        tree_root: true

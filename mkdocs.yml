@@ -1,0 +1,51 @@
+---
+site_name: "myositis_cdes"
+theme:
+  name: material
+  palette:
+    # https://github.com/facelessuser/mkdocs_pymdownx_material_extras
+    # palette:
+    #  scheme: slate
+    #  primary: cyan
+  features:
+    - content.tabs.link
+
+plugins:
+  - search
+  - mknotebooks:
+      execute: false
+  - mermaid2:
+      # https://mkdocs-mermaid2.readthedocs.io/en/latest/library
+      version: 10.9.0
+  - mkdocs_pymdownx_material_extras
+
+markdown_extensions:
+  - pymdownx.superfences:
+      # make exceptions to highlighting of code
+      custom_fences:
+        # activate display of Mermaid diagrams
+        - name: mermaid
+          class: mermaid
+          # https://pypi.org/project/mkdocs-pymdownx-material-extras
+          # https://mkdocs-mermaid2.readthedocs.io/en/latest/superfences
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  # https://github.com/linkml/linkml/issues/1708
+  - Index: index_myositis_cdes.md
+  - About: about.md
+
+site_url: https://NIH-NLM.github.io/myositis_cdes
+repo_url: https://github.com/NIH-NLM/myositis_cdes
+markdown_extensions:
+  - tables
+extra_javascript:
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js
+
+# Uncomment this block to enable use of Google Analytics.
+# Replace the property value with your own ID.
+# extra:
+#   analytics:
+#     provider: google
+#     property: G-XXXXXXXXXX
